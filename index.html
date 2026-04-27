@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="system">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fan Token Agentic Wallet — SportMind</title>
+<meta name="description" content="Build AI-powered fan token wallets on Chiliz Chain — powered by SportMind intelligence. Developer starter kit. MIT licensed.">
+<meta property="og:title" content="Fan Token Agentic Wallet Starter Kit — SportMind">
+<meta property="og:description" content="Build AI-powered fan token wallets on Chiliz Chain — powered by SportMind intelligence.">
+<meta property="og:url" content="https://sportmind.github.io/fan-token-agentic-wallet-starter-kit">
+<link rel="canonical" href="https://sportmind.github.io/fan-token-agentic-wallet-starter-kit">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+/* ── TOKENS ─────────────────────────────────────────────────────── */
+:root {
+  --sans: 'Geist', system-ui, sans-serif;
+  --mono: 'Geist Mono', monospace;
+
+  --bg:       #ffffff;
+  --bg-2:     #f9f9f8;
+  --bg-3:     #f2f2f0;
+  --border:   #e8e8e4;
+  --text:     #111110;
+  --text-2:   #6f6e69;
+  --text-3:   #b0afa8;
+  --accent:   #16663a;
+  --accent-h: #0f4f2c;
+  --green-bg: rgba(22,102,58,0.07);
+  --btn-text: #ffffff;
+  --orange:   #c07830;
+}
+
+[data-r="dark"] {
+  --bg:       #111110;
+  --bg-2:     #191918;
+  --bg-3:     #222220;
+  --border:   #2e2e2b;
+  --text:     #eeede8;
+  --text-2:   #908e85;
+  --text-3:   #5a5950;
+  --accent:   #4ade80;
+  --accent-h: #6aee98;
+  --green-bg: rgba(74,222,128,0.08);
+  --btn-text: #0a2e1a;
+  --orange:   #e09040;
+}
+
+/* ── RESET ──────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  transition: background .2s, color .2s;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ── LAYOUT ─────────────────────────────────────────────────────── */
+.w  { max-width: 640px;  margin: 0 auto; padding: 0 24px; }
+.ww { max-width: 960px;  margin: 0 auto; padding: 0 24px; }
+
+/* ── NAV ────────────────────────────────────────────────────────── */
+nav {
+  position: sticky; top: 0; z-index: 50;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+.nav-i {
+  max-width: 960px; margin: 0 auto; padding: 0 24px;
+  height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-r { display: flex; align-items: center; gap: 4px; }
+.logo {
+  font-family: var(--mono);
+  font-size: 13px; font-weight: 500;
+  color: var(--text); letter-spacing: -0.02em;
+  display: flex; align-items: center; gap: 8px;
+}
+.logo-dot {
+  width: 6px; height: 6px;
+  background: var(--accent); border-radius: 50%;
+  animation: blink 2.5s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+.logo-sub {
+  font-size: 11px; color: var(--text-3);
+  font-weight: 400; letter-spacing: 0;
+}
+.nav-a {
+  font-size: 13px; color: var(--text-2);
+  height: 32px; padding: 0 12px;
+  display: inline-flex; align-items: center;
+  border-radius: 5px;
+  transition: color .15s, background .15s;
+}
+.nav-a:hover { color: var(--text); background: var(--bg-2); }
+.nav-gh {
+  font-family: var(--mono); font-size: 12px; color: var(--accent);
+  border: 1px solid var(--border);
+  height: 32px; padding: 0 14px;
+  display: inline-flex; align-items: center;
+  border-radius: 5px;
+  transition: border-color .15s, background .15s;
+}
+.nav-gh:hover { border-color: var(--accent); background: var(--green-bg); }
+.th {
+  background: none; border: 1px solid var(--border);
+  color: var(--text-3);
+  width: 34px; height: 32px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 5px; cursor: pointer; font-size: 13px;
+  transition: color .15s, border-color .15s;
+  outline: none;
+}
+.th:hover { color: var(--text-2); border-color: var(--text-3); }
+
+/* ── HERO ───────────────────────────────────────────────────────── */
+.hero { padding: 96px 0 80px; text-align: center; }
+.badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 11px;
+  color: var(--text-3); letter-spacing: .1em;
+  text-transform: uppercase; margin-bottom: 36px;
+}
+.badge-dot { width: 4px; height: 4px; background: var(--accent); border-radius: 50%; }
+h1 {
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 300; line-height: 1.1;
+  letter-spacing: -0.04em; color: var(--text);
+  margin-bottom: 24px;
+}
+h1 strong { font-weight: 500; }
+.sub {
+  font-size: 17px; font-weight: 300;
+  color: var(--text-2); line-height: 1.75;
+  max-width: 460px; margin: 0 auto 40px;
+}
+.btns { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.btn-p {
+  font-family: var(--mono); font-size: 13px; font-weight: 500;
+  background: var(--accent); color: var(--btn-text);
+  padding: 10px 22px; border-radius: 6px;
+  border: 1px solid var(--accent);
+  transition: opacity .15s;
+}
+.btn-p:hover { opacity: .85; }
+.btn-s {
+  font-family: var(--mono); font-size: 13px;
+  color: var(--text-2); border: 1px solid var(--border);
+  padding: 10px 22px; border-radius: 6px;
+  transition: color .15s, border-color .15s;
+}
+.btn-s:hover { color: var(--text); border-color: var(--text-3); }
+
+/* ── STATS ──────────────────────────────────────────────────────── */
+.stats {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 40px 0;
+}
+.stats-g {
+  display: grid; grid-template-columns: repeat(4,1fr);
+}
+.stat {
+  text-align: center; padding: 0 16px;
+  border-right: 1px solid var(--border);
+}
+.stat:last-child { border-right: none; }
+.stat-n {
+  font-family: var(--mono); font-size: 28px; font-weight: 500;
+  letter-spacing: -0.04em; color: var(--text);
+  line-height: 1; margin-bottom: 6px;
+}
+.stat-l { font-size: 12px; color: var(--text-3); letter-spacing: .02em; }
+
+/* ── SECTION ────────────────────────────────────────────────────── */
+.sec { padding: 80px 0; border-bottom: 1px solid var(--border); }
+.sec-tag {
+  font-family: var(--mono); font-size: 11px;
+  text-transform: uppercase; letter-spacing: .14em;
+  color: var(--text-3); margin-bottom: 20px;
+}
+h2 {
+  font-size: clamp(22px, 3vw, 28px);
+  font-weight: 400; letter-spacing: -0.03em;
+  line-height: 1.2; margin-bottom: 14px;
+}
+.prose {
+  font-size: 16px; font-weight: 300;
+  color: var(--text-2); line-height: 1.8;
+}
+
+/* ── QUICK START ────────────────────────────────────────────────── */
+.qs-steps {
+  margin-top: 40px;
+  display: flex; flex-direction: column;
+  border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+}
+.qs-step {
+  display: grid; grid-template-columns: 48px 1fr;
+  border-bottom: 1px solid var(--border);
+}
+.qs-step:last-child { border-bottom: none; }
+.qs-n {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--text-3); padding: 18px 0 18px 20px;
+  border-right: 1px solid var(--border);
+  display: flex; align-items: flex-start; padding-top: 20px;
+}
+.qs-body { padding: 16px 20px; }
+.qs-title { font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+.qs-code {
+  font-family: var(--mono); font-size: 12px;
+  color: var(--text-2); line-height: 1.8;
+  background: var(--bg-3); padding: 10px 14px;
+  border-radius: 5px; overflow-x: auto;
+}
+.qs-code .k { color: var(--accent); }
+.qs-code .c { color: var(--text-3); }
+.qs-note { font-size: 13px; color: var(--text-3); margin-top: 8px; }
+
+/* ── LAYER DIAGRAM ──────────────────────────────────────────────── */
+.layers {
+  margin-top: 40px;
+  display: flex; flex-direction: column;
+  border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+}
+.layer {
+  display: grid; grid-template-columns: 28px 140px 1fr 64px;
+  gap: 16px; align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  transition: background .15s;
+}
+.layer:last-child { border-bottom: none; }
+.layer:hover { background: var(--bg-2); }
+.l-order {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--text-3); text-align: center;
+}
+.l-name { font-size: 13px; font-weight: 500; color: var(--text); }
+.l-desc { font-size: 13px; color: var(--text-2); line-height: 1.5; }
+.l-dir {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--text-3); text-align: right;
+}
+
+/* ── EXAMPLES ───────────────────────────────────────────────────── */
+.examples {
+  margin-top: 40px; display: flex; flex-direction: column; gap: 1px;
+  border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+}
+.example {
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 16px; align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  transition: background .15s;
+}
+.example:last-child { border-bottom: none; }
+.example:hover { background: var(--bg-2); }
+.ex-title { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+.ex-desc { font-size: 13px; color: var(--text-2); line-height: 1.5; }
+.ex-layers { margin-top: 6px; display: flex; gap: 4px; flex-wrap: wrap; }
+.ex-layer {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--accent); background: var(--green-bg);
+  padding: 2px 8px; border-radius: 3px;
+}
+.ex-cmd {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--text-3); white-space: nowrap;
+  background: var(--bg-3); padding: 4px 10px; border-radius: 4px;
+}
+
+/* ── SIGNAL OUTPUT ──────────────────────────────────────────────── */
+.code-box {
+  margin-top: 40px;
+  border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+}
+.code-bar {
+  background: var(--bg-2); border-bottom: 1px solid var(--border);
+  padding: 10px 18px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.code-bar-l { font-family: var(--mono); font-size: 11px; color: var(--text-3); }
+.code-bar-r {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--accent); background: var(--green-bg);
+  padding: 2px 8px; border-radius: 3px;
+}
+.code-body {
+  background: var(--bg-2); padding: 24px 20px;
+  font-family: var(--mono); font-size: 12px;
+  line-height: 1.9; color: var(--text-2); overflow-x: auto;
+}
+.code-body .k { color: var(--accent); }
+.code-body .n { color: var(--orange); }
+.code-body .b { color: var(--text-3); }
+.code-body .c { color: var(--text-3); font-style: italic; }
+
+/* ── GUARDRAILS ─────────────────────────────────────────────────── */
+.g-rows { margin-top: 40px; }
+.g-row {
+  display: grid; grid-template-columns: 180px 1fr auto;
+  gap: 16px; align-items: baseline;
+  padding: 14px 0; border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.g-row:first-child { border-top: 1px solid var(--border); }
+.g-key { font-family: var(--mono); font-size: 11px; color: var(--text-3); }
+.g-desc { color: var(--text-2); font-size: 13px; }
+.g-val {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--accent); white-space: nowrap;
+}
+
+/* ── TOKENS TABLE ───────────────────────────────────────────────── */
+.tokens {
+  margin-top: 40px;
+  border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+}
+.token-row {
+  display: grid; grid-template-columns: 56px 1fr 1fr auto;
+  gap: 16px; align-items: center;
+  padding: 14px 20px; border-bottom: 1px solid var(--border);
+  transition: background .15s;
+}
+.token-row:last-child { border-bottom: none; }
+.token-row:hover { background: var(--bg-2); }
+.token-row.header {
+  background: var(--bg-2);
+  font-family: var(--mono); font-size: 10px;
+  color: var(--text-3); text-transform: uppercase; letter-spacing: .08em;
+}
+.token-row.header:hover { background: var(--bg-2); }
+.t-sym { font-family: var(--mono); font-size: 13px; font-weight: 500; color: var(--accent); }
+.t-club { font-size: 13px; color: var(--text); }
+.t-league { font-size: 12px; color: var(--text-3); }
+.t-ftp {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--accent); background: var(--green-bg);
+  padding: 2px 8px; border-radius: 3px;
+}
+
+/* ── CTA ────────────────────────────────────────────────────────── */
+.cta { padding: 96px 0; text-align: center; }
+.cta h2 { margin-bottom: 14px; }
+.cta .prose { margin-bottom: 36px; }
+
+/* ── FOOTER ─────────────────────────────────────────────────────── */
+footer { border-top: 1px solid var(--border); padding: 28px 0; }
+.foot-i {
+  max-width: 960px; margin: 0 auto; padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px;
+}
+.foot-logo { font-family: var(--mono); font-size: 12px; color: var(--text-3); }
+.foot-links { display: flex; gap: 20px; }
+.foot-a { font-size: 13px; color: var(--text-3); transition: color .15s; }
+.foot-a:hover { color: var(--text-2); }
+.foot-copy { font-family: var(--mono); font-size: 11px; color: var(--text-3); }
+
+/* ── RESPONSIVE ─────────────────────────────────────────────────── */
+@media (max-width: 720px) {
+  .stats-g { grid-template-columns: 1fr 1fr; }
+  .stat { border-right: none; border-bottom: 1px solid var(--border); padding: 16px; }
+  .stat:nth-child(odd) { border-right: 1px solid var(--border); }
+  .stat:last-child, .stat:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+  .layer { grid-template-columns: 1fr; gap: 3px; }
+  .l-order, .l-dir { display: none; }
+  .example { grid-template-columns: 1fr; gap: 8px; }
+  .g-row { grid-template-columns: 1fr; gap: 4px; }
+  .token-row { grid-template-columns: 48px 1fr 1fr; }
+  .t-ftp { display: none; }
+  .nav-r .nav-a { display: none; }
+  .foot-links { display: none; }
+  .hero { padding: 64px 0 56px; }
+}
+
+/* ── REVEAL ─────────────────────────────────────────────────────── */
+.r { opacity: 0; transform: translateY(10px); transition: opacity .5s ease, transform .5s ease; }
+.r.in { opacity: 1; transform: none; }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-i">
+    <div class="logo">
+      <div class="logo-dot"></div>
+      fan-token-wallet
+      <span class="logo-sub">/ SportMind</span>
+    </div>
+    <div class="nav-r">
+      <a href="#quickstart" class="nav-a">Quick start</a>
+      <a href="#layers" class="nav-a">Layers</a>
+      <a href="#examples" class="nav-a">Examples</a>
+      <a href="https://github.com/SportMind/fan-token-agentic-wallet-starter-kit" class="nav-gh" target="_blank" rel="noopener">GitHub ↗</a>
+      <button class="th" id="th" aria-label="Toggle theme">◐</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="w">
+  <section class="hero r">
+    <h1>Fan token wallets<br><strong>powered by SportMind</strong></h1>
+    <p class="sub">
+      A starter kit for building AI agents that manage fan token
+      payments, governance, and trading on Chiliz Chain —
+      with SportMind intelligence embedded from the start.
+    </p>
+    <div class="btns">
+      <a href="https://github.com/SportMind/fan-token-agentic-wallet-starter-kit" class="btn-p" target="_blank" rel="noopener">View on GitHub</a>
+      <a href="#quickstart" class="btn-s">Quick start</a>
+    </div>
+  </section>
+</div>
+
+<!-- STATS -->
+<div class="stats r">
+  <div class="ww">
+    <div class="stats-g">
+      <div class="stat">
+        <div class="stat-n">4</div>
+        <div class="stat-l">SportMind layers</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">5</div>
+        <div class="stat-l">Working examples</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">6</div>
+        <div class="stat-l">Fan tokens</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">0</div>
+        <div class="stat-l">Extra dependencies</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- QUICK START -->
+<div class="w">
+  <section class="sec r" id="quickstart">
+    <p class="sec-tag">Quick start</p>
+    <h2>Running in four commands.</h2>
+    <p class="prose">
+      No API keys required to explore. All examples run on mock data out of the box.
+      Start with the SportMind layer demo — it teaches the pattern everything else builds on.
+    </p>
+    <div class="qs-steps">
+      <div class="qs-step">
+        <div class="qs-n">01</div>
+        <div class="qs-body">
+          <div class="qs-title">Clone the repository</div>
+          <div class="qs-code"><span class="k">git clone</span> https://github.com/SportMind/fan-token-agentic-wallet-starter-kit
+<span class="k">cd</span> fan-token-agentic-wallet-starter-kit</div>
+        </div>
+      </div>
+      <div class="qs-step">
+        <div class="qs-n">02</div>
+        <div class="qs-body">
+          <div class="qs-title">Install dependencies</div>
+          <div class="qs-code"><span class="k">npm install</span></div>
+        </div>
+      </div>
+      <div class="qs-step">
+        <div class="qs-n">03</div>
+        <div class="qs-body">
+          <div class="qs-title">Configure environment</div>
+          <div class="qs-code"><span class="k">cp</span> .env.example .env
+<span class="c"># Set LLM_PROVIDER and API key — optional for mock mode</span></div>
+        </div>
+      </div>
+      <div class="qs-step">
+        <div class="qs-n">04</div>
+        <div class="qs-body">
+          <div class="qs-title">Run the SportMind layer demo first</div>
+          <div class="qs-code"><span class="k">npm run</span> demo:sportmind</div>
+          <div class="qs-note">Loads all four layers, shows signal output, explains every decision.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- LAYERS -->
+<div class="w">
+  <section class="sec r" id="layers">
+    <p class="sec-tag">Intelligence layers</p>
+    <h2>Macro first. Action last.</h2>
+    <p class="prose">
+      SportMind layers load in a fixed order. Each layer builds on the last.
+      The macro gate runs before anything executes — no exceptions.
+    </p>
+    <div class="layers">
+      <div class="layer">
+        <div class="l-order">1</div>
+        <div class="l-name">Macro</div>
+        <div class="l-desc">Regulatory posture, crypto cycle phase, geopolitical risk. Gates all execution.</div>
+        <div class="l-dir">macro/</div>
+      </div>
+      <div class="layer">
+        <div class="l-order">2</div>
+        <div class="l-name">Fan token</div>
+        <div class="l-desc">CHI, AFS, TAI, FTP PATH_2 supply mechanics. Core commercial signal.</div>
+        <div class="l-dir">fan-token/</div>
+      </div>
+      <div class="layer">
+        <div class="l-order">3</div>
+        <div class="l-name">Sports</div>
+        <div class="l-desc">SMS, match direction, event type. Only active when match is within 48h.</div>
+        <div class="l-dir">sports/</div>
+      </div>
+      <div class="layer">
+        <div class="l-order">4</div>
+        <div class="l-name">Athlete</div>
+        <div class="l-desc">Form modifier, availability, star departure risk. Refines match signal.</div>
+        <div class="l-dir">athlete/</div>
+      </div>
+    </div>
+
+    <div class="code-box" style="margin-top:32px">
+      <div class="code-bar">
+        <span class="code-bar-l">sportmind · consolidated signal output</span>
+        <span class="code-bar-r">AFC · FTP PATH_2 active</span>
+      </div>
+      <div class="code-body"><pre>{
+  <span class="k">"action"</span>:              <span class="k">"ANTICIPATE_SUPPLY_EVENT"</span>,
+  <span class="k">"token"</span>:               <span class="k">"AFC"</span>,
+  <span class="k">"confidence"</span>:          <span class="n">68</span>,
+  <span class="k">"macro_gated"</span>:         <span class="b">false</span>,
+  <span class="k">"requires_approval"</span>:   <span class="b">true</span>,
+
+  <span class="k">"signals_used"</span>: [
+    <span class="k">"fanToken.ftpPath2.supplyEvent"</span>,   <span class="c">// CHZ_BURN</span>
+    <span class="k">"fanToken.chi"</span>,                    <span class="c">// 78 — structural demand</span>
+    <span class="k">"macro.macroModifier"</span>              <span class="c">// 0.95×</span>
+  ]
+}</pre></div>
+    </div>
+  </section>
+</div>
+
+<!-- EXAMPLES -->
+<div class="w">
+  <section class="sec r" id="examples">
+    <p class="sec-tag">Examples</p>
+    <h2>Five patterns. All runnable.</h2>
+    <p class="prose">
+      Each example demonstrates a distinct SportMind intelligence pattern.
+      All run on mock data — no wallet or API key needed.
+    </p>
+    <div class="examples">
+      <div class="example">
+        <div>
+          <div class="ex-title">SportMind Layer Demo</div>
+          <div class="ex-desc">How intelligence flows from layers into wallet decisions. Start here.</div>
+          <div class="ex-layers">
+            <span class="ex-layer">macro</span>
+            <span class="ex-layer">fan-token</span>
+            <span class="ex-layer">sports</span>
+            <span class="ex-layer">athlete</span>
+          </div>
+        </div>
+        <div class="ex-cmd">demo:sportmind</div>
+      </div>
+      <div class="example">
+        <div>
+          <div class="ex-title">FTP PATH_2 Supply Event</div>
+          <div class="ex-desc">Detect CHZ_BURN before the market sees it. The signal standard models miss.</div>
+          <div class="ex-layers">
+            <span class="ex-layer">fan-token</span>
+            <span class="ex-layer">sports</span>
+          </div>
+        </div>
+        <div class="ex-cmd">example:ftp-path2</div>
+      </div>
+      <div class="example">
+        <div>
+          <div class="ex-title">Match-Day Wallet</div>
+          <div class="ex-desc">SMS-driven entry and exit, gated by CHI structural demand confirmation.</div>
+          <div class="ex-layers">
+            <span class="ex-layer">sports</span>
+            <span class="ex-layer">athlete</span>
+            <span class="ex-layer">fan-token</span>
+          </div>
+        </div>
+        <div class="ex-cmd">example:matchday</div>
+      </div>
+      <div class="example">
+        <div>
+          <div class="ex-title">Portfolio Rebalancing</div>
+          <div class="ex-desc">CHI-weighted allocation across multiple fan tokens with macro gate.</div>
+          <div class="ex-layers">
+            <span class="ex-layer">fan-token</span>
+            <span class="ex-layer">macro</span>
+          </div>
+        </div>
+        <div class="ex-cmd">example:portfolio</div>
+      </div>
+      <div class="example">
+        <div>
+          <div class="ex-title">Governance Agent</div>
+          <div class="ex-desc">TAI and AFS gated voting — only participates when engagement is real.</div>
+          <div class="ex-layers">
+            <span class="ex-layer">fan-token</span>
+            <span class="ex-layer">macro</span>
+          </div>
+        </div>
+        <div class="ex-cmd">example:governance</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- GUARDRAILS -->
+<div class="w">
+  <section class="sec r">
+    <p class="sec-tag">Guardrails</p>
+    <h2>The LLM cannot bypass these.</h2>
+    <p class="prose">
+      Spend limits and execution rules are enforced at the execution layer —
+      not in the prompt. Start with <code style="font-family:var(--mono);font-size:14px;color:var(--accent)">confirm</code> mode.
+      Switch to <code style="font-family:var(--mono);font-size:14px;color:var(--accent)">auto</code> only when fully tested.
+    </p>
+    <div class="g-rows">
+      <div class="g-row">
+        <div class="g-key">DAILY_SPEND_CAP_CHZ</div>
+        <div class="g-desc">Maximum CHZ spend per day across all wallet actions</div>
+        <div class="g-val">100 CHZ</div>
+      </div>
+      <div class="g-row">
+        <div class="g-key">APPROVAL_THRESHOLD_CHZ</div>
+        <div class="g-desc">Actions above this amount require explicit approval</div>
+        <div class="g-val">20 CHZ</div>
+      </div>
+      <div class="g-row">
+        <div class="g-key">EXECUTION_MODE</div>
+        <div class="g-desc">confirm = always ask · auto = act within caps</div>
+        <div class="g-val">confirm</div>
+      </div>
+      <div class="g-row">
+        <div class="g-key">MACRO_OVERRIDE_BLOCKS</div>
+        <div class="g-desc">SportMind macro layer can block all execution regardless of other signals</div>
+        <div class="g-val">true</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- TOKENS -->
+<div class="w">
+  <section class="sec r">
+    <p class="sec-tag">Fan token registry</p>
+    <h2>Six tokens. All FTP PATH_2 active.</h2>
+    <p class="prose">
+      FTP PATH_2 links on-pitch results to token supply mechanics.
+      A WIN is not just a result — it is a supply reduction event.
+    </p>
+    <div class="tokens">
+      <div class="token-row header">
+        <div>Token</div>
+        <div>Club</div>
+        <div>League</div>
+        <div>FTP PATH_2</div>
+      </div>
+      <div class="token-row">
+        <div class="t-sym">AFC</div>
+        <div class="t-club">Arsenal FC</div>
+        <div class="t-league">Premier League</div>
+        <div class="t-ftp">Active ✓</div>
+      </div>
+      <div class="token-row">
+        <div class="t-sym">BAR</div>
+        <div class="t-club">FC Barcelona</div>
+        <div class="t-league">La Liga</div>
+        <div class="t-ftp">Active ✓</div>
+      </div>
+      <div class="token-row">
+        <div class="t-sym">CITY</div>
+        <div class="t-club">Manchester City</div>
+        <div class="t-league">Premier League</div>
+        <div class="t-ftp">Active ✓</div>
+      </div>
+      <div class="token-row">
+        <div class="t-sym">PSG</div>
+        <div class="t-club">Paris Saint-Germain</div>
+        <div class="t-league">Ligue 1</div>
+        <div class="t-ftp">Active ✓</div>
+      </div>
+      <div class="token-row">
+        <div class="t-sym">JUV</div>
+        <div class="t-club">Juventus</div>
+        <div class="t-league">Serie A</div>
+        <div class="t-ftp">Active ✓</div>
+      </div>
+      <div class="token-row">
+        <div class="t-sym">ACM</div>
+        <div class="t-club">AC Milan</div>
+        <div class="t-league">Serie A</div>
+        <div class="t-ftp">Active ✓</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- CTA -->
+<div class="w">
+  <section class="cta r">
+    <h2>Fork it. Build on it.</h2>
+    <p class="prose">
+      MIT licensed. Compatible with Claude, GPT-4o, Groq, and any OpenAI-compatible provider.<br>
+      Part of the SportMind open sports intelligence ecosystem.
+    </p>
+    <div class="btns">
+      <a href="https://github.com/SportMind/fan-token-agentic-wallet-starter-kit" class="btn-p" target="_blank" rel="noopener">View on GitHub →</a>
+      <a href="https://github.com/SportMind/SportMind" class="btn-s" target="_blank" rel="noopener">SportMind library</a>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-i">
+    <div class="foot-logo">fan-token-agentic-wallet-starter-kit</div>
+    <div class="foot-links">
+      <a href="https://github.com/SportMind/fan-token-agentic-wallet-starter-kit" class="foot-a" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/SportMind/fan-token-agentic-wallet-starter-kit/blob/main/CONTRIBUTING.md" class="foot-a" target="_blank" rel="noopener">Contributing</a>
+      <a href="https://github.com/SportMind/fan-token-agentic-wallet-starter-kit/blob/main/LICENSE" class="foot-a" target="_blank" rel="noopener">MIT License</a>
+      <a href="https://github.com/SportMind/SportMind" class="foot-a" target="_blank" rel="noopener">SportMind</a>
+    </div>
+    <div class="foot-copy">© 2026 SportMind</div>
+  </div>
+</footer>
+
+<script>
+// THEME
+const T = ['system','light','dark'];
+const I = { system:'◐', light:'○', dark:'●' };
+function r(t) { return t==='system' ? (matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light') : t; }
+function apply(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  document.documentElement.setAttribute('data-r', r(t));
+  document.getElementById('th').textContent = I[t];
+  localStorage.setItem('smw', t);
+}
+apply(localStorage.getItem('smw') || 'system');
+document.getElementById('th').addEventListener('click', () => {
+  const c = document.documentElement.getAttribute('data-theme') || 'system';
+  apply(T[(T.indexOf(c)+1) % T.length]);
+});
+matchMedia('(prefers-color-scheme:dark)').addEventListener('change', () => {
+  if (document.documentElement.getAttribute('data-theme')==='system') apply('system');
+});
+
+// REVEAL
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('in');
+    io.unobserve(e.target);
+  });
+}, { threshold: 0.07 });
+document.querySelectorAll('.r').forEach(el => io.observe(el));
+
+// SMOOTH SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior:'smooth' }); }
+  });
+});
+</script>
+</body>
+</html>
