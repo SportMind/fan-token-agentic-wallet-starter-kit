@@ -351,6 +351,51 @@ h2 {
   padding: 2px 8px; border-radius: 3px;
 }
 
+/* ── SUITE ──────────────────────────────────────────────────────── */
+.suite-g {
+  margin-top: 40px;
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 1px;
+  border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+  background: var(--border);
+}
+.suite-card {
+  background: var(--bg);
+  padding: 24px;
+  display: flex; flex-direction: column; gap: 12px;
+  transition: background .15s;
+}
+.suite-card:hover { background: var(--bg-2); }
+.suite-card.current { background: var(--bg-2); }
+.suite-tag {
+  font-family: var(--mono); font-size: 10px;
+  text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-3);
+}
+.suite-tag.active { color: var(--accent); }
+.suite-name {
+  font-size: 15px; font-weight: 500;
+  color: var(--text); line-height: 1.3;
+}
+.suite-desc {
+  font-size: 13px; color: var(--text-2);
+  line-height: 1.6; flex: 1;
+}
+.suite-link {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--accent); display: inline-flex; align-items: center; gap: 4px;
+  transition: opacity .15s;
+}
+.suite-link:hover { opacity: .7; }
+.suite-chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 2px; }
+.suite-chip {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--text-3); border: 1px solid var(--border);
+  padding: 2px 7px; border-radius: 3px;
+}
+@media (max-width: 720px) {
+  .suite-g { grid-template-columns: 1fr; }
+}
+
 /* ── CTA ────────────────────────────────────────────────────────── */
 .cta { padding: 96px 0; text-align: center; }
 .cta h2 { margin-bottom: 14px; }
@@ -718,13 +763,67 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; }
   </section>
 </div>
 
+<!-- SUITE -->
+<div class="ww">
+  <section class="sec r">
+    <p class="sec-tag">SportMind suite</p>
+    <h2>Part of a larger system.</h2>
+    <p class="prose">
+      This kit is one layer of the SportMind open sports intelligence suite.
+      Each component is independently usable and MIT licensed.
+    </p>
+    <div class="suite-g">
+
+      <!-- Core library -->
+      <div class="suite-card">
+        <div class="suite-tag">Core library</div>
+        <div class="suite-name">SportMind</div>
+        <div class="suite-desc">
+          456 skill files. 126 calibration records. 42 sports. 96% direction accuracy.
+          The intelligence layer everything else builds on.
+        </div>
+        <a href="https://sportmind.dev" class="suite-link" target="_blank" rel="noopener">
+          sportmind.dev ↗
+        </a>
+      </div>
+
+      <!-- This repo -->
+      <div class="suite-card current">
+        <div class="suite-tag active">This repository</div>
+        <div class="suite-name">Fan Token™ Agentic Wallet</div>
+        <div class="suite-desc">
+          Chiliz Chain integration. Fan Token™ on-chain mechanics, FTP PATH_2
+          supply events, and wallet-layer intelligence primitives.
+        </div>
+        <a href="https://github.com/SportMind/fan-token-agentic-wallet-starter-kit" class="suite-link" target="_blank" rel="noopener">
+          GitHub ↗
+        </a>
+      </div>
+
+      <!-- Telegram kit -->
+      <div class="suite-card">
+        <div class="suite-tag">Telegram</div>
+        <div class="suite-name">Telegram AI Bot Starter Kit</div>
+        <div class="suite-desc">
+          Deploy SportMind-powered AI agents on Telegram via Managed Bots.
+          4 prompts, 6 configs, 5 use cases, community governance.
+        </div>
+        <a href="https://sportmind.github.io/telegram-ai-bot-starter-kit/" class="suite-link" target="_blank" rel="noopener">
+          sportmind.github.io ↗
+        </a>
+      </div>
+
+    </div>
+  </section>
+</div>
+
 <!-- CTA -->
 <div class="w">
   <section class="cta r">
     <h2>Fork it. Build on it.</h2>
     <p class="prose">
       MIT licensed. Compatible with Claude, GPT-4o, Groq, and any OpenAI-compatible provider.<br>
-      Part of the SportMind open sports intelligence ecosystem.
+      Part of the SportMind open sports intelligence suite.
     </p>
     <div class="btns">
       <a href="https://github.com/SportMind/fan-token-agentic-wallet-starter-kit" class="btn-p" target="_blank" rel="noopener">View on GitHub →</a>
