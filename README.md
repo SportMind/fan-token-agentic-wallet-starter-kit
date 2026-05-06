@@ -220,5 +220,5 @@ Built applications using this kit? Open a PR to add yourself to [WHO-BUILDS-WITH
 
 ---
 
-*Part of the [SportMind](https://github.com/SportMind/SportMind) open sports intelligence ecosystem.*  
+*Part of the [SportMind](https://github.com/SportMind/SportMind) open sports intelligence suite.*  
 *Not affiliated with Chiliz, Socios.com, or any football club.*

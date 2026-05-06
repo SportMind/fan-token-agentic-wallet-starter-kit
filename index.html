@@ -18,7 +18,6 @@
 :root {
   --sans: 'Geist', system-ui, sans-serif;
   --mono: 'Geist Mono', monospace;
-
   --bg:       #ffffff;
   --bg-2:     #f9f9f8;
   --bg-3:     #f2f2f0;
@@ -32,7 +31,6 @@
   --btn-text: #ffffff;
   --orange:   #c07830;
 }
-
 [data-r="dark"] {
   --bg:       #111110;
   --bg-2:     #191918;
@@ -59,6 +57,7 @@ body {
   color: var(--text);
   -webkit-font-smoothing: antialiased;
   transition: background .2s, color .2s;
+  overflow-x: hidden;
 }
 a { color: inherit; text-decoration: none; }
 
@@ -71,75 +70,73 @@ nav {
   position: sticky; top: 0; z-index: 50;
   border-bottom: 1px solid var(--border);
   background: var(--bg);
+  width: 100%;
 }
 .nav-i {
   max-width: 960px; margin: 0 auto; padding: 0 24px;
   height: 52px;
   display: flex; align-items: center; justify-content: space-between;
+  gap: 8px;
 }
-.nav-r { display: flex; align-items: center; gap: 4px; }
+.nav-r { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
 .logo {
   font-family: var(--mono);
   font-size: 13px; font-weight: 500;
   color: var(--text); letter-spacing: -0.02em;
   display: flex; align-items: center; gap: 8px;
+  min-width: 0; flex-shrink: 1;
+  transition: opacity .15s;
 }
+.logo:hover { opacity: .75; }
 .logo-dot {
-  width: 6px; height: 6px;
+  width: 6px; height: 6px; flex-shrink: 0;
   background: var(--accent); border-radius: 50%;
   animation: blink 2.5s ease-in-out infinite;
 }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
-.logo-sub {
-  font-size: 11px; color: var(--text-3);
-  font-weight: 400; letter-spacing: 0;
-}
+.logo-sub { font-size: 11px; color: var(--text-3); font-weight: 400; }
 .nav-a {
   font-size: 13px; color: var(--text-2);
-  height: 32px; padding: 0 12px;
+  height: 44px; padding: 0 12px;
   display: inline-flex; align-items: center;
   border-radius: 5px;
   transition: color .15s, background .15s;
+  white-space: nowrap;
 }
 .nav-a:hover { color: var(--text); background: var(--bg-2); }
 .nav-gh {
   font-family: var(--mono); font-size: 12px; color: var(--accent);
   border: 1px solid var(--border);
-  height: 32px; padding: 0 14px;
+  height: 44px; padding: 0 14px;
   display: inline-flex; align-items: center;
   border-radius: 5px;
   transition: border-color .15s, background .15s;
+  white-space: nowrap;
 }
 .nav-gh:hover { border-color: var(--accent); background: var(--green-bg); }
 .th {
   background: none; border: 1px solid var(--border);
   color: var(--text-3);
-  width: 34px; height: 32px;
+  width: 44px; height: 44px;
   display: inline-flex; align-items: center; justify-content: center;
   border-radius: 5px; cursor: pointer; font-size: 13px;
   transition: color .15s, border-color .15s;
-  outline: none;
+  outline: none; flex-shrink: 0;
 }
 .th:hover { color: var(--text-2); border-color: var(--text-3); }
+.th:focus { outline: none; }
 
 /* ── HERO ───────────────────────────────────────────────────────── */
 .hero { padding: 96px 0 80px; text-align: center; }
-.badge {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--mono); font-size: 11px;
-  color: var(--text-3); letter-spacing: .1em;
-  text-transform: uppercase; margin-bottom: 36px;
-}
-.badge-dot { width: 4px; height: 4px; background: var(--accent); border-radius: 50%; }
 h1 {
-  font-size: clamp(32px, 5vw, 56px);
+  font-size: clamp(30px, 5vw, 56px);
   font-weight: 300; line-height: 1.1;
   letter-spacing: -0.04em; color: var(--text);
   margin-bottom: 24px;
 }
 h1 strong { font-weight: 500; }
 .sub {
-  font-size: 17px; font-weight: 300;
+  font-size: clamp(15px, 2vw, 17px); font-weight: 300;
   color: var(--text-2); line-height: 1.75;
   max-width: 460px; margin: 0 auto 40px;
 }
@@ -147,16 +144,18 @@ h1 strong { font-weight: 500; }
 .btn-p {
   font-family: var(--mono); font-size: 13px; font-weight: 500;
   background: var(--accent); color: var(--btn-text);
-  padding: 10px 22px; border-radius: 6px;
+  padding: 0 22px; border-radius: 6px;
   border: 1px solid var(--accent);
   transition: opacity .15s;
+  min-height: 44px; display: inline-flex; align-items: center;
 }
 .btn-p:hover { opacity: .85; }
 .btn-s {
   font-family: var(--mono); font-size: 13px;
   color: var(--text-2); border: 1px solid var(--border);
-  padding: 10px 22px; border-radius: 6px;
+  padding: 0 22px; border-radius: 6px;
   transition: color .15s, border-color .15s;
+  min-height: 44px; display: inline-flex; align-items: center;
 }
 .btn-s:hover { color: var(--text); border-color: var(--text-3); }
 
@@ -166,16 +165,14 @@ h1 strong { font-weight: 500; }
   border-bottom: 1px solid var(--border);
   padding: 40px 0;
 }
-.stats-g {
-  display: grid; grid-template-columns: repeat(4,1fr);
-}
+.stats-g { display: grid; grid-template-columns: repeat(4,1fr); }
 .stat {
   text-align: center; padding: 0 16px;
   border-right: 1px solid var(--border);
 }
 .stat:last-child { border-right: none; }
 .stat-n {
-  font-family: var(--mono); font-size: 28px; font-weight: 500;
+  font-family: var(--mono); font-size: clamp(20px, 4vw, 28px); font-weight: 500;
   letter-spacing: -0.04em; color: var(--text);
   line-height: 1; margin-bottom: 6px;
 }
@@ -189,12 +186,12 @@ h1 strong { font-weight: 500; }
   color: var(--text-3); margin-bottom: 20px;
 }
 h2 {
-  font-size: clamp(22px, 3vw, 28px);
+  font-size: clamp(20px, 3vw, 28px);
   font-weight: 400; letter-spacing: -0.03em;
   line-height: 1.2; margin-bottom: 14px;
 }
 .prose {
-  font-size: 16px; font-weight: 300;
+  font-size: clamp(14px, 2vw, 16px); font-weight: 300;
   color: var(--text-2); line-height: 1.8;
 }
 
@@ -210,24 +207,25 @@ h2 {
 }
 .qs-step:last-child { border-bottom: none; }
 .qs-n {
-  font-family: var(--mono); font-size: 11px;
-  color: var(--text-3); padding: 18px 0 18px 20px;
+  font-family: var(--mono); font-size: 11px; color: var(--text-3);
   border-right: 1px solid var(--border);
-  display: flex; align-items: flex-start; padding-top: 20px;
+  display: flex; align-items: flex-start;
+  padding: 20px 0 20px 16px;
 }
-.qs-body { padding: 16px 20px; }
+.qs-body { padding: 16px 20px; min-width: 0; }
 .qs-title { font-size: 14px; font-weight: 500; margin-bottom: 8px; }
 .qs-code {
   font-family: var(--mono); font-size: 12px;
   color: var(--text-2); line-height: 1.8;
   background: var(--bg-3); padding: 10px 14px;
   border-radius: 5px; overflow-x: auto;
+  white-space: pre; max-width: 100%;
 }
 .qs-code .k { color: var(--accent); }
 .qs-code .c { color: var(--text-3); }
 .qs-note { font-size: 13px; color: var(--text-3); margin-top: 8px; }
 
-/* ── LAYER DIAGRAM ──────────────────────────────────────────────── */
+/* ── LAYERS ─────────────────────────────────────────────────────── */
 .layers {
   margin-top: 40px;
   display: flex; flex-direction: column;
@@ -242,20 +240,43 @@ h2 {
 }
 .layer:last-child { border-bottom: none; }
 .layer:hover { background: var(--bg-2); }
-.l-order {
-  font-family: var(--mono); font-size: 10px;
-  color: var(--text-3); text-align: center;
-}
+.l-order { font-family: var(--mono); font-size: 10px; color: var(--text-3); text-align: center; }
 .l-name { font-size: 13px; font-weight: 500; color: var(--text); }
 .l-desc { font-size: 13px; color: var(--text-2); line-height: 1.5; }
-.l-dir {
-  font-family: var(--mono); font-size: 10px;
-  color: var(--text-3); text-align: right;
+.l-dir { font-family: var(--mono); font-size: 10px; color: var(--text-3); text-align: right; }
+
+/* ── CODE BOX ───────────────────────────────────────────────────── */
+.code-box {
+  margin-top: 32px;
+  border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
 }
+.code-bar {
+  background: var(--bg-2); border-bottom: 1px solid var(--border);
+  padding: 10px 18px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 8px;
+}
+.code-bar-l { font-family: var(--mono); font-size: 11px; color: var(--text-3); }
+.code-bar-r {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--accent); background: var(--green-bg);
+  padding: 2px 8px; border-radius: 3px;
+}
+.code-body {
+  background: var(--bg-2); padding: 24px 20px;
+  font-family: var(--mono); font-size: 12px;
+  line-height: 1.9; color: var(--text-2);
+  overflow-x: auto;
+}
+.code-body pre { white-space: pre; }
+.code-body .k { color: var(--accent); }
+.code-body .n { color: var(--orange); }
+.code-body .b { color: var(--text-3); }
+.code-body .c { color: var(--text-3); font-style: italic; }
 
 /* ── EXAMPLES ───────────────────────────────────────────────────── */
 .examples {
-  margin-top: 40px; display: flex; flex-direction: column; gap: 1px;
+  margin-top: 40px; display: flex; flex-direction: column;
   border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
 }
 .example {
@@ -279,49 +300,20 @@ h2 {
   font-family: var(--mono); font-size: 11px;
   color: var(--text-3); white-space: nowrap;
   background: var(--bg-3); padding: 4px 10px; border-radius: 4px;
+  align-self: flex-start;
 }
-
-/* ── SIGNAL OUTPUT ──────────────────────────────────────────────── */
-.code-box {
-  margin-top: 40px;
-  border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
-}
-.code-bar {
-  background: var(--bg-2); border-bottom: 1px solid var(--border);
-  padding: 10px 18px;
-  display: flex; justify-content: space-between; align-items: center;
-}
-.code-bar-l { font-family: var(--mono); font-size: 11px; color: var(--text-3); }
-.code-bar-r {
-  font-family: var(--mono); font-size: 11px;
-  color: var(--accent); background: var(--green-bg);
-  padding: 2px 8px; border-radius: 3px;
-}
-.code-body {
-  background: var(--bg-2); padding: 24px 20px;
-  font-family: var(--mono); font-size: 12px;
-  line-height: 1.9; color: var(--text-2); overflow-x: auto;
-}
-.code-body .k { color: var(--accent); }
-.code-body .n { color: var(--orange); }
-.code-body .b { color: var(--text-3); }
-.code-body .c { color: var(--text-3); font-style: italic; }
 
 /* ── GUARDRAILS ─────────────────────────────────────────────────── */
 .g-rows { margin-top: 40px; }
 .g-row {
-  display: grid; grid-template-columns: 180px 1fr auto;
+  display: grid; grid-template-columns: 210px 1fr auto;
   gap: 16px; align-items: baseline;
   padding: 14px 0; border-bottom: 1px solid var(--border);
-  font-size: 14px;
 }
 .g-row:first-child { border-top: 1px solid var(--border); }
 .g-key { font-family: var(--mono); font-size: 11px; color: var(--text-3); }
 .g-desc { color: var(--text-2); font-size: 13px; }
-.g-val {
-  font-family: var(--mono); font-size: 11px;
-  color: var(--accent); white-space: nowrap;
-}
+.g-val { font-family: var(--mono); font-size: 11px; color: var(--accent); white-space: nowrap; }
 
 /* ── TOKENS TABLE ───────────────────────────────────────────────── */
 .tokens {
@@ -348,53 +340,36 @@ h2 {
 .t-ftp {
   font-family: var(--mono); font-size: 11px;
   color: var(--accent); background: var(--green-bg);
-  padding: 2px 8px; border-radius: 3px;
+  padding: 2px 8px; border-radius: 3px; white-space: nowrap;
 }
 
-/* ── SUITE ──────────────────────────────────────────────────────── */
+/* ── SUITE — 4 columns ──────────────────────────────────────────── */
 .suite-g {
   margin-top: 40px;
-  display: grid; grid-template-columns: repeat(3,1fr); gap: 1px;
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 1px;
   border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
   background: var(--border);
 }
 .suite-card {
-  background: var(--bg);
-  padding: 24px;
+  background: var(--bg); padding: 24px;
   display: flex; flex-direction: column; gap: 12px;
   transition: background .15s;
 }
 .suite-card:hover { background: var(--bg-2); }
 .suite-card.current { background: var(--bg-2); }
-.suite-tag {
+.suite-label {
   font-family: var(--mono); font-size: 10px;
-  text-transform: uppercase; letter-spacing: .1em;
-  color: var(--text-3);
+  text-transform: uppercase; letter-spacing: .1em; color: var(--text-3);
 }
-.suite-tag.active { color: var(--accent); }
-.suite-name {
-  font-size: 15px; font-weight: 500;
-  color: var(--text); line-height: 1.3;
-}
-.suite-desc {
-  font-size: 13px; color: var(--text-2);
-  line-height: 1.6; flex: 1;
-}
+.suite-label.active { color: var(--accent); }
+.suite-name { font-size: 14px; font-weight: 500; color: var(--text); line-height: 1.3; }
+.suite-desc { font-size: 13px; color: var(--text-2); line-height: 1.6; flex: 1; }
 .suite-link {
-  font-family: var(--mono); font-size: 11px;
-  color: var(--accent); display: inline-flex; align-items: center; gap: 4px;
-  transition: opacity .15s;
+  font-family: var(--mono); font-size: 11px; color: var(--accent);
+  display: inline-flex; align-items: center;
+  min-height: 44px; transition: opacity .15s;
 }
 .suite-link:hover { opacity: .7; }
-.suite-chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 2px; }
-.suite-chip {
-  font-family: var(--mono); font-size: 10px;
-  color: var(--text-3); border: 1px solid var(--border);
-  padding: 2px 7px; border-radius: 3px;
-}
-@media (max-width: 720px) {
-  .suite-g { grid-template-columns: 1fr; }
-}
 
 /* ── CTA ────────────────────────────────────────────────────────── */
 .cta { padding: 96px 0; text-align: center; }
@@ -409,26 +384,60 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; }
   flex-wrap: wrap; gap: 16px;
 }
 .foot-logo { font-family: var(--mono); font-size: 12px; color: var(--text-3); }
-.foot-links { display: flex; gap: 20px; }
+.foot-links { display: flex; gap: 20px; flex-wrap: wrap; }
 .foot-a { font-size: 13px; color: var(--text-3); transition: color .15s; }
 .foot-a:hover { color: var(--text-2); }
 .foot-copy { font-family: var(--mono); font-size: 11px; color: var(--text-3); }
 
 /* ── RESPONSIVE ─────────────────────────────────────────────────── */
+
+/* Tablet 768px — suite 2x2 */
+@media (max-width: 768px) {
+  .suite-g { grid-template-columns: repeat(2,1fr); }
+}
+
+/* Mobile 720px */
 @media (max-width: 720px) {
+  /* Stats 2x2 */
   .stats-g { grid-template-columns: 1fr 1fr; }
-  .stat { border-right: none; border-bottom: 1px solid var(--border); padding: 16px; }
+  .stat { border-right: none; border-bottom: 1px solid var(--border); padding: 20px 16px; }
   .stat:nth-child(odd) { border-right: 1px solid var(--border); }
   .stat:last-child, .stat:nth-last-child(2):nth-child(odd) { border-bottom: none; }
-  .layer { grid-template-columns: 1fr; gap: 3px; }
+  /* Layers */
+  .layer { grid-template-columns: 1fr; gap: 4px; padding: 14px 16px; }
   .l-order, .l-dir { display: none; }
+  /* Examples */
   .example { grid-template-columns: 1fr; gap: 8px; }
-  .g-row { grid-template-columns: 1fr; gap: 4px; }
-  .token-row { grid-template-columns: 48px 1fr 1fr; }
+  .ex-cmd { align-self: auto; }
+  /* Guardrails */
+  .g-row { grid-template-columns: 1fr; gap: 4px; padding: 12px 0; }
+  /* Token table */
+  .token-row { grid-template-columns: 48px 1fr 1fr; padding: 12px 16px; }
   .t-ftp { display: none; }
+  /* Suite */
+  .suite-g { grid-template-columns: 1fr; }
+  /* Nav */
   .nav-r .nav-a { display: none; }
+  /* Footer */
   .foot-links { display: none; }
+  /* Hero */
   .hero { padding: 64px 0 56px; }
+  /* Quick start */
+  .qs-step { grid-template-columns: 40px 1fr; }
+  .qs-n { padding: 16px 0 16px 12px; }
+  .qs-body { padding: 14px 16px; }
+  /* Code — wrap on mobile */
+  .qs-code { white-space: pre-wrap; word-break: break-all; font-size: 11px; }
+  .code-body { padding: 16px 14px; font-size: 11px; }
+  .code-body pre { white-space: pre-wrap; word-break: break-all; }
+}
+
+/* Small mobile 375–400px */
+@media (max-width: 400px) {
+  .w, .ww { padding: 0 16px; }
+  .nav-i { padding: 0 16px; }
+  .foot-i { padding: 0 16px; }
+  .suite-card { padding: 18px 16px; }
 }
 
 /* ── REVEAL ─────────────────────────────────────────────────────── */
@@ -442,11 +451,11 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; }
 <!-- NAV -->
 <nav>
   <div class="nav-i">
-    <div class="logo">
+    <a href="https://sportmind.dev" class="logo">
       <div class="logo-dot"></div>
       fan-token-wallet
       <span class="logo-sub">/ SportMind</span>
-    </div>
+    </a>
     <div class="nav-r">
       <a href="#quickstart" class="nav-a">Quick start</a>
       <a href="#layers" class="nav-a">Layers</a>
@@ -457,12 +466,12 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; }
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- HERO — no badge or version line -->
 <div class="w">
   <section class="hero r">
     <h1>Fan Token™ wallets<br><strong>powered by SportMind</strong></h1>
     <p class="sub">
-      A starter kit for building AI agents that manage fan token
+      A starter kit for building AI agents that manage Fan Token™
       payments, governance, and trading on Chiliz Chain —
       with SportMind intelligence embedded from the start.
     </p>
@@ -477,22 +486,10 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; }
 <div class="stats r">
   <div class="ww">
     <div class="stats-g">
-      <div class="stat">
-        <div class="stat-n">4</div>
-        <div class="stat-l">SportMind layers</div>
-      </div>
-      <div class="stat">
-        <div class="stat-n">5</div>
-        <div class="stat-l">Working examples</div>
-      </div>
-      <div class="stat">
-        <div class="stat-n">6</div>
-        <div class="stat-l">Fan tokens</div>
-      </div>
-      <div class="stat">
-        <div class="stat-n">0</div>
-        <div class="stat-l">Extra dependencies</div>
-      </div>
+      <div class="stat"><div class="stat-n">4</div><div class="stat-l">SportMind layers</div></div>
+      <div class="stat"><div class="stat-n">5</div><div class="stat-l">Working examples</div></div>
+      <div class="stat"><div class="stat-n">6</div><div class="stat-l">Fan tokens</div></div>
+      <div class="stat"><div class="stat-n">0</div><div class="stat-l">Extra dependencies</div></div>
     </div>
   </div>
 </div>
@@ -502,10 +499,7 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; }
   <section class="sec r" id="quickstart">
     <p class="sec-tag">Quick start</p>
     <h2>Running in four commands.</h2>
-    <p class="prose">
-      No API keys required to explore. All examples run on mock data out of the box.
-      Start with the SportMind layer demo — it teaches the pattern everything else builds on.
-    </p>
+    <p class="prose">No API keys required to explore. All examples run on mock data out of the box. Start with the SportMind layer demo — it teaches the pattern everything else builds on.</p>
     <div class="qs-steps">
       <div class="qs-step">
         <div class="qs-n">01</div>
@@ -547,10 +541,7 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; }
   <section class="sec r" id="layers">
     <p class="sec-tag">Intelligence layers</p>
     <h2>Macro first. Action last.</h2>
-    <p class="prose">
-      SportMind layers load in a fixed order. Each layer builds on the last.
-      The macro gate runs before anything executes — no exceptions.
-    </p>
+    <p class="prose">SportMind layers load in a fixed order. Each layer builds on the last. The macro gate runs before anything executes — no exceptions.</p>
     <div class="layers">
       <div class="layer">
         <div class="l-order">1</div>
@@ -577,8 +568,7 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; }
         <div class="l-dir">athlete/</div>
       </div>
     </div>
-
-    <div class="code-box" style="margin-top:32px">
+    <div class="code-box">
       <div class="code-bar">
         <span class="code-bar-l">sportmind · consolidated signal output</span>
         <span class="code-bar-r">AFC · FTP PATH_2 active</span>
@@ -605,20 +595,14 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; }
   <section class="sec r" id="examples">
     <p class="sec-tag">Examples</p>
     <h2>Five patterns. All runnable.</h2>
-    <p class="prose">
-      Each example demonstrates a distinct SportMind intelligence pattern.
-      All run on mock data — no wallet or API key needed.
-    </p>
+    <p class="prose">Each example demonstrates a distinct SportMind intelligence pattern. All run on mock data — no wallet or API key needed.</p>
     <div class="examples">
       <div class="example">
         <div>
           <div class="ex-title">SportMind Layer Demo</div>
           <div class="ex-desc">How intelligence flows from layers into wallet decisions. Start here.</div>
           <div class="ex-layers">
-            <span class="ex-layer">macro</span>
-            <span class="ex-layer">fan-token</span>
-            <span class="ex-layer">sports</span>
-            <span class="ex-layer">athlete</span>
+            <span class="ex-layer">macro</span><span class="ex-layer">fan-token</span><span class="ex-layer">sports</span><span class="ex-layer">athlete</span>
           </div>
         </div>
         <div class="ex-cmd">demo:sportmind</div>
@@ -627,10 +611,7 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; }
         <div>
           <div class="ex-title">FTP PATH_2 Supply Event</div>
           <div class="ex-desc">Detect CHZ_BURN before the market sees it. The signal standard models miss.</div>
-          <div class="ex-layers">
-            <span class="ex-layer">fan-token</span>
-            <span class="ex-layer">sports</span>
-          </div>
+          <div class="ex-layers"><span class="ex-layer">fan-token</span><span class="ex-layer">sports</span></div>
         </div>
         <div class="ex-cmd">example:ftp-path2</div>
       </div>
@@ -638,11 +619,7 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; }
         <div>
           <div class="ex-title">Match-Day Wallet</div>
           <div class="ex-desc">SMS-driven entry and exit, gated by CHI structural demand confirmation.</div>
-          <div class="ex-layers">
-            <span class="ex-layer">sports</span>
-            <span class="ex-layer">athlete</span>
-            <span class="ex-layer">fan-token</span>
-          </div>
+          <div class="ex-layers"><span class="ex-layer">sports</span><span class="ex-layer">athlete</span><span class="ex-layer">fan-token</span></div>
         </div>
         <div class="ex-cmd">example:matchday</div>
       </div>
@@ -650,10 +627,7 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; }
         <div>
           <div class="ex-title">Portfolio Rebalancing</div>
           <div class="ex-desc">CHI-weighted allocation across multiple fan tokens with macro gate.</div>
-          <div class="ex-layers">
-            <span class="ex-layer">fan-token</span>
-            <span class="ex-layer">macro</span>
-          </div>
+          <div class="ex-layers"><span class="ex-layer">fan-token</span><span class="ex-layer">macro</span></div>
         </div>
         <div class="ex-cmd">example:portfolio</div>
       </div>
@@ -661,10 +635,7 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; }
         <div>
           <div class="ex-title">Governance Agent</div>
           <div class="ex-desc">TAI and AFS gated voting — only participates when engagement is real.</div>
-          <div class="ex-layers">
-            <span class="ex-layer">fan-token</span>
-            <span class="ex-layer">macro</span>
-          </div>
+          <div class="ex-layers"><span class="ex-layer">fan-token</span><span class="ex-layer">macro</span></div>
         </div>
         <div class="ex-cmd">example:governance</div>
       </div>
@@ -677,11 +648,7 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; }
   <section class="sec r">
     <p class="sec-tag">Guardrails</p>
     <h2>The LLM cannot bypass these.</h2>
-    <p class="prose">
-      Spend limits and execution rules are enforced at the execution layer —
-      not in the prompt. Start with <code style="font-family:var(--mono);font-size:14px;color:var(--accent)">confirm</code> mode.
-      Switch to <code style="font-family:var(--mono);font-size:14px;color:var(--accent)">auto</code> only when fully tested.
-    </p>
+    <p class="prose">Spend limits and execution rules are enforced at the execution layer — not in the prompt. Start with <code style="font-family:var(--mono);font-size:13px;color:var(--accent)">confirm</code> mode. Switch to <code style="font-family:var(--mono);font-size:13px;color:var(--accent)">auto</code> only when fully tested.</p>
     <div class="g-rows">
       <div class="g-row">
         <div class="g-key">DAILY_SPEND_CAP_CHZ</div>
@@ -707,112 +674,57 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; }
   </section>
 </div>
 
-<!-- TOKENS -->
+<!-- FAN TOKEN REGISTRY -->
 <div class="w">
   <section class="sec r">
     <p class="sec-tag">Fan token registry</p>
     <h2>Six tokens. All FTP PATH_2 active.</h2>
-    <p class="prose">
-      FTP PATH_2 links on-pitch results to token supply mechanics.
-      A WIN is not just a result — it is a supply reduction event.
-    </p>
+    <p class="prose">FTP PATH_2 links on-pitch results to token supply mechanics. A WIN is not just a result — it is a supply reduction event.</p>
     <div class="tokens">
       <div class="token-row header">
-        <div>Token</div>
-        <div>Club</div>
-        <div>League</div>
-        <div>FTP PATH_2</div>
+        <div>Token</div><div>Club</div><div>League</div><div>FTP PATH_2</div>
       </div>
-      <div class="token-row">
-        <div class="t-sym">AFC</div>
-        <div class="t-club">Arsenal FC</div>
-        <div class="t-league">Premier League</div>
-        <div class="t-ftp">Active ✓</div>
-      </div>
-      <div class="token-row">
-        <div class="t-sym">BAR</div>
-        <div class="t-club">FC Barcelona</div>
-        <div class="t-league">La Liga</div>
-        <div class="t-ftp">Active ✓</div>
-      </div>
-      <div class="token-row">
-        <div class="t-sym">CITY</div>
-        <div class="t-club">Manchester City</div>
-        <div class="t-league">Premier League</div>
-        <div class="t-ftp">Active ✓</div>
-      </div>
-      <div class="token-row">
-        <div class="t-sym">PSG</div>
-        <div class="t-club">Paris Saint-Germain</div>
-        <div class="t-league">Ligue 1</div>
-        <div class="t-ftp">Active ✓</div>
-      </div>
-      <div class="token-row">
-        <div class="t-sym">JUV</div>
-        <div class="t-club">Juventus</div>
-        <div class="t-league">Serie A</div>
-        <div class="t-ftp">Active ✓</div>
-      </div>
-      <div class="token-row">
-        <div class="t-sym">ACM</div>
-        <div class="t-club">AC Milan</div>
-        <div class="t-league">Serie A</div>
-        <div class="t-ftp">Active ✓</div>
-      </div>
+      <div class="token-row"><div class="t-sym">AFC</div><div class="t-club">Arsenal FC</div><div class="t-league">Premier League</div><div class="t-ftp">Active ✓</div></div>
+      <div class="token-row"><div class="t-sym">BAR</div><div class="t-club">FC Barcelona</div><div class="t-league">La Liga</div><div class="t-ftp">Active ✓</div></div>
+      <div class="token-row"><div class="t-sym">CITY</div><div class="t-club">Manchester City</div><div class="t-league">Premier League</div><div class="t-ftp">Active ✓</div></div>
+      <div class="token-row"><div class="t-sym">PSG</div><div class="t-club">Paris Saint-Germain</div><div class="t-league">Ligue 1</div><div class="t-ftp">Active ✓</div></div>
+      <div class="token-row"><div class="t-sym">JUV</div><div class="t-club">Juventus</div><div class="t-league">Serie A</div><div class="t-ftp">Active ✓</div></div>
+      <div class="token-row"><div class="t-sym">ACM</div><div class="t-club">AC Milan</div><div class="t-league">Serie A</div><div class="t-ftp">Active ✓</div></div>
     </div>
   </section>
 </div>
 
-<!-- SUITE -->
+<!-- SUITE — 4 cards matching Telegram kit layout -->
 <div class="ww">
   <section class="sec r">
     <p class="sec-tag">SportMind suite</p>
     <h2>Part of a larger system.</h2>
-    <p class="prose">
-      This kit is one layer of the SportMind open sports intelligence suite.
-      Each component is independently usable and MIT licensed.
-    </p>
+    <p class="prose">This kit is one layer of the SportMind open sports intelligence suite. Each component is independently usable and MIT licensed.</p>
     <div class="suite-g">
-
-      <!-- Core library -->
       <div class="suite-card">
-        <div class="suite-tag">Core library</div>
+        <div class="suite-label">Core library</div>
         <div class="suite-name">SportMind</div>
-        <div class="suite-desc">
-          456 skill files. 126 calibration records. 42 sports. 96% direction accuracy.
-          The intelligence layer everything else builds on.
-        </div>
-        <a href="https://sportmind.dev" class="suite-link" target="_blank" rel="noopener">
-          sportmind.dev ↗
-        </a>
+        <div class="suite-desc">456 skill files. 126 calibration records. 42 sports. 96% direction accuracy. The intelligence layer everything else builds on.</div>
+        <a href="https://sportmind.dev" class="suite-link" target="_blank" rel="noopener">sportmind.dev ↗</a>
       </div>
-
-      <!-- This repo -->
       <div class="suite-card current">
-        <div class="suite-tag active">This repository</div>
+        <div class="suite-label active">This repository</div>
         <div class="suite-name">Fan Token™ Agentic Wallet</div>
-        <div class="suite-desc">
-          Chiliz Chain integration. Fan Token™ on-chain mechanics, FTP PATH_2
-          supply events, and wallet-layer intelligence primitives.
-        </div>
-        <a href="https://github.com/SportMind/fan-token-agentic-wallet-starter-kit" class="suite-link" target="_blank" rel="noopener">
-          GitHub ↗
-        </a>
+        <div class="suite-desc">Chiliz Chain integration. Fan Token™ on-chain mechanics, FTP PATH_2 supply events, and wallet-layer intelligence primitives.</div>
+        <a href="https://github.com/SportMind/fan-token-agentic-wallet-starter-kit" class="suite-link" target="_blank" rel="noopener">GitHub ↗</a>
       </div>
-
-      <!-- Telegram kit -->
       <div class="suite-card">
-        <div class="suite-tag">Telegram</div>
+        <div class="suite-label">Telegram</div>
         <div class="suite-name">Telegram AI Bot Starter Kit</div>
-        <div class="suite-desc">
-          Deploy SportMind-powered AI agents on Telegram via Managed Bots.
-          4 prompts, 6 configs, 5 use cases, community governance.
-        </div>
-        <a href="https://sportmind.github.io/telegram-ai-bot-starter-kit/" class="suite-link" target="_blank" rel="noopener">
-          sportmind.github.io ↗
-        </a>
+        <div class="suite-desc">Deploy SportMind-powered AI agents on Telegram via Managed Bots. 4 prompts, 6 configs, 5 use cases, community governance.</div>
+        <a href="https://sportmind.github.io/telegram-ai-bot-starter-kit/" class="suite-link" target="_blank" rel="noopener">sportmind.github.io ↗</a>
       </div>
-
+      <div class="suite-card">
+        <div class="suite-label">MCP</div>
+        <div class="suite-name">SportMind MCP Server</div>
+        <div class="suite-desc">Model Context Protocol server exposing SportMind intelligence as structured tools for Claude, Cursor, and any MCP-compatible client.</div>
+        <a href="https://github.com/SportMind/SportMind/blob/main/MCP-SERVER.md" class="suite-link" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
     </div>
   </section>
 </div>
@@ -827,7 +739,7 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; }
     </p>
     <div class="btns">
       <a href="https://github.com/SportMind/fan-token-agentic-wallet-starter-kit" class="btn-p" target="_blank" rel="noopener">View on GitHub →</a>
-      <a href="https://github.com/SportMind/SportMind" class="btn-s" target="_blank" rel="noopener">SportMind library</a>
+      <a href="https://sportmind.dev" class="btn-s" target="_blank" rel="noopener">SportMind library</a>
     </div>
   </section>
 </div>
@@ -840,7 +752,7 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; }
       <a href="https://github.com/SportMind/fan-token-agentic-wallet-starter-kit" class="foot-a" target="_blank" rel="noopener">GitHub</a>
       <a href="https://github.com/SportMind/fan-token-agentic-wallet-starter-kit/blob/main/CONTRIBUTING.md" class="foot-a" target="_blank" rel="noopener">Contributing</a>
       <a href="https://github.com/SportMind/fan-token-agentic-wallet-starter-kit/blob/main/LICENSE" class="foot-a" target="_blank" rel="noopener">MIT License</a>
-      <a href="https://github.com/SportMind/SportMind" class="foot-a" target="_blank" rel="noopener">SportMind</a>
+      <a href="https://sportmind.dev" class="foot-a" target="_blank" rel="noopener">SportMind</a>
     </div>
     <div class="foot-copy">© 2026 SportMind</div>
   </div>
