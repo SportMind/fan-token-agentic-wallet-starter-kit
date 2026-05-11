@@ -342,6 +342,16 @@ h2 {
   color: var(--accent); background: var(--green-bg);
   padding: 2px 8px; border-radius: 3px; white-space: nowrap;
 }
+.t-ftp-pending {
+  color: var(--text-3); background: transparent;
+  border: 1px solid var(--border);
+}
+.token-note {
+  margin-top: 16px;
+  font-size: 13px; font-weight: 300;
+  color: var(--text-3); line-height: 1.7;
+  font-style: italic;
+}
 
 /* ── SUITE — 4 columns ──────────────────────────────────────────── */
 .suite-g {
@@ -678,19 +688,20 @@ footer { border-top: 1px solid var(--border); padding: 28px 0; }
 <div class="w">
   <section class="sec r">
     <p class="sec-tag">Fan token registry</p>
-    <h2>Six tokens. All FTP PATH_2 active.</h2>
-    <p class="prose">FTP PATH_2 links on-pitch results to token supply mechanics. A WIN is not just a result — it is a supply reduction event.</p>
+    <h2>Six tokens. One FTP PATH_2 confirmed.</h2>
+    <p class="prose">FTP PATH_2 links on-pitch results to token supply mechanics. $AFC is the only confirmed active token as of April 2026. A WIN is not just a result — it is a supply reduction event.</p>
     <div class="tokens">
       <div class="token-row header">
         <div>Token</div><div>Club</div><div>League</div><div>FTP PATH_2</div>
       </div>
       <div class="token-row"><div class="t-sym">AFC</div><div class="t-club">Arsenal FC</div><div class="t-league">Premier League</div><div class="t-ftp">Active ✓</div></div>
-      <div class="token-row"><div class="t-sym">BAR</div><div class="t-club">FC Barcelona</div><div class="t-league">La Liga</div><div class="t-ftp">Active ✓</div></div>
-      <div class="token-row"><div class="t-sym">CITY</div><div class="t-club">Manchester City</div><div class="t-league">Premier League</div><div class="t-ftp">Active ✓</div></div>
-      <div class="token-row"><div class="t-sym">PSG</div><div class="t-club">Paris Saint-Germain</div><div class="t-league">Ligue 1</div><div class="t-ftp">Active ✓</div></div>
-      <div class="token-row"><div class="t-sym">JUV</div><div class="t-club">Juventus</div><div class="t-league">Serie A</div><div class="t-ftp">Active ✓</div></div>
-      <div class="token-row"><div class="t-sym">ACM</div><div class="t-club">AC Milan</div><div class="t-league">Serie A</div><div class="t-ftp">Active ✓</div></div>
+      <div class="token-row"><div class="t-sym">BAR</div><div class="t-club">FC Barcelona</div><div class="t-league">La Liga</div><div class="t-ftp t-ftp-pending">Demand only</div></div>
+      <div class="token-row"><div class="t-sym">CITY</div><div class="t-club">Manchester City</div><div class="t-league">Premier League</div><div class="t-ftp t-ftp-pending">Demand only</div></div>
+      <div class="token-row"><div class="t-sym">PSG</div><div class="t-club">Paris Saint-Germain</div><div class="t-league">Ligue 1</div><div class="t-ftp t-ftp-pending">Demand only</div></div>
+      <div class="token-row"><div class="t-sym">JUV</div><div class="t-club">Juventus</div><div class="t-league">Serie A</div><div class="t-ftp t-ftp-pending">Demand only</div></div>
+      <div class="token-row"><div class="t-sym">ACM</div><div class="t-club">AC Milan</div><div class="t-league">Serie A</div><div class="t-ftp t-ftp-pending">Demand only</div></div>
     </div>
+    <p class="token-note">FTP PATH_2 is currently confirmed for $AFC only. All other tokens are demand-only signals. This table will be updated when Chiliz Group officially confirms PATH_2 for additional tokens.</p>
   </section>
 </div>
 
